@@ -1,0 +1,76 @@
+MAP
+    NAME "URBAN_ATLAS_COG"
+    STATUS ON
+    IMAGETYPE PNG
+    SIZE 1024 1024
+    UNITS METERS
+
+    # ETRS89-extended / LAEA Europe (EPSG:3035)
+    EXTENT 2500000 1400000 7500000 5600000
+
+    PROJECTION
+        "EPSG:3035"
+    END
+
+    CONFIG "MS_ERRORFILE" "stderr"
+    CONFIG "CPL_CURL_GZIP" "YES"
+    # CONFIG "CPL_DEBUG" "ON"
+    CONFIG "CPL_TIMESTAMP" "ON"
+    CONFIG "CPL_VSIL_CURL_CACHE_SIZE" "33554432"
+    CONFIG "CPL_VSIL_CURL_CHUNK_SIZE" "2097152"
+    CONFIG "GDAL_CACHEMAX" "10%"
+    CONFIG "GDAL_HTTP_TCP_KEEPALIVE" "YES"
+    CONFIG "GDAL_HTTP_VERSION" "2PRIOR_KNOWLEDGE"
+    CONFIG "GDAL_INGESTED_BYTES_AT_OPEN" "1048576"
+    CONFIG "GDAL_NUM_THREADS" "2"
+
+    WEB
+        METADATA
+            "wms_title"                   "Urban Atlas COG (DEMO)"
+            "wms_abstract"                "DEMO Urban Atlas service using pre-rendered COG overviews for low scales"
+            "wms_srs"                     "EPSG:3035 EPSG:3857 EPSG:4326 EPSG:2180"
+            "wms_server_version"          "1.3.0"
+            "wms_getcapabilities_version" "1.3.0"
+            "wms_feature_info_mime_type"  "text/html,text/plain"
+            "wms_getfeatureinfo_formatlist" "text/html,text/plain"
+            "wms_enable_request"          "*"
+            "wms_allow_getmap_without_styles" "true"
+        END
+    END
+    ######################################
+    LAYER
+        NAME "Krakow_UA_2021_Vector"
+        METADATA
+            "wms_title" "Urban Atlas 2021 Krakow"
+            "wms_abstract" "Vector Urban Atlas 2021 Krakow; shown for scales 1:300000"
+            "wms_enable_request" "*"
+            "wms_name" "UA_2021_Krakow"
+            "ows_enable_request" "*"
+            "ows_name" "UA_2021_Krakow"
+            "ows_title" "Urban Atlas 2021 Krakow (vector)"
+            "wms_include_items" "*"
+            "gml_include_items" "*"
+            "wms_getfeatureinfo_formatlist" "text/html"
+            "wms_feature_info_mime_type" "text/html"
+        END
+        TYPE POLYGON
+        STATUS ON
+        CONNECTIONTYPE OGR
+        CONNECTION "/app/data/CLMS_UA_LCU_S2021_V025ha_PL003L2_KRAKOW_03035_V01_R00_20241025.fgb"
+        DATA "CLMS_UA_LCU_S2021_V025ha_PL003L2_KRAKOW_03035_V01_R00_20241025"
+        STYLEITEM "sld:///app/data/urban_atlas_2021.sld"
+        TEMPLATE "/app/data/ua_2021_gfi.html"
+        TOLERANCE 3
+        TOLERANCEUNITS PIXELS
+        PROJECTION
+            "EPSG:3035"
+        END
+        CONNECTIONOPTIONS
+            "VERIFY_BUFFERS" "NO"
+        END
+        PROCESSING "CLOSE_CONNECTION=DEFER"
+    END
+
+    ######################################
+
+END

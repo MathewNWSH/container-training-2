@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mapserver
+  namespace: mapserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mapserver
+  template:
+    metadata:
+      labels:
+        app: mapserver
+    spec:
+      containers:
+        - name: mapserver
+          image: my-mapserver
+          imagePullPolicy: IfNotPresent
+          # Startup: daj MapServerowi czas na uruchomienie
+          startupProbe:
+            httpGet:
+              port: 80
+              path: /ogc?SERVICE=WMS&REQUEST=GetCapabilities
+            periodSeconds: 5       # Zmieniono z 2s na 5s (mniej zapytań na starcie)
+            timeoutSeconds: 5      # Zmieniono z 2s na 5s (bezpieczniejszy timeout)
+            failureThreshold: 12   # 12 * 5s = 60s (całkowity czas bez zmian)
+
+          # Readiness: kiedy Pod jest gotowy na ruch
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /ogc?SERVICE=WMS&REQUEST=GetCapabilities
+            periodSeconds: 10
+            timeoutSeconds: 5      # Zmieniono z 2s na 5s (WMS bywa powolny)
+            failureThreshold: 3
+
+          # Liveness: restartuj Pod, jeśli proces padnie
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+          env:
+            - name: MIN_PROCS
+              value: "1"
+            - name: MAX_PROCS
+              value: "5"
+            - name: MAX_LOAD_PER_PROC
+              value: "5"
+            - name: IDLE_TIMEOUT
+              value: "10"
+
+            # paths inside the container image (config baked into image)
+            - name: MAPSERVER_CONFIG_FILE
+              value: "/app/config/mapserver.conf"
+            - name: MS_MAPFILE
+              value: "/app/config/wms.map"
+            - name: SERVICE_TYPE
+              value: "WMS"
+
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 512Mi
+            limits:
+              cpu: 3000m
+              memory: 1Gi

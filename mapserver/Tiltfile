@@ -1,0 +1,18 @@
+docker_build(
+  'my-mapserver',
+  context='Docker',
+  dockerfile='Docker/Dockerfile',
+)
+
+k8s_yaml([
+  '../namespaces/mapserver.yaml',
+  'deployment.yaml',
+  'service.yaml',
+  'ingress.yaml',
+  'hpa.yaml',
+])
+
+k8s_resource(
+  'mapserver',
+  port_forwards=8080,
+)

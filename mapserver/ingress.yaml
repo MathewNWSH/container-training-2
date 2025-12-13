@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mapserver
+  namespace: mapserver
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: mapserver.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mapserver
+                port:
+                  number: 80
