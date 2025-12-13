@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mapserver
+  namespace: mapserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mapserver
+  template:
+    metadata:
+      labels:
+        app: mapserver
+    spec:
+      containers:
+        - name: mapserver
+          image: ghcr.io/mathewnwsh/mapserver-docker-agh:latest
+          env:
+            - name: MIN_PROCS
+              value: "1"
+            - name: MAX_PROCS
+              value: "10000"
+            - name: MAX_LOAD_PER_PROC
+              value: "100"
+            - name: IDLE_TIMEOUT
+              value: "10"
+            - name: MAPSERVER_CONFIG_FILE
+              value: "config/wms.map"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - name: mapfiles
+              mountPath: /etc/mapserver
+              readOnly: true
+      volumes:
+        - name: mapfiles
+          configMap:
+            name: mapserver-mapfiles
