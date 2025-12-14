@@ -60,10 +60,10 @@ We use **Tilt** to spin up the MapServer stack.
 
 Once up, MapServer is available via:
 
-*   **WMS URL (Local):** `http://localhost:8080/ogc?...` (via Tilt port-forwarding)
+*   **WMS URL (Local):** `http://localhost:8080/mapserver?...` (via Tilt port-forwarding). If you need to port-forward manually, prefer the CLI (`kubectl -n mapserver port-forward svc/mapserver 8080:80`) over the Rancher Desktop GUI port-forward to avoid extra proxy latency.
 *   **Ingress Host:** `mapserver.local` (requires adding `127.0.0.1 mapserver.local` to your `/etc/hosts`).
 
 **Example WMS Request:**
 ```
-http://localhost:8080/ogc?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=2914994,4969954,3129956,5152659&CRS=EPSG:3035&WIDTH=800&HEIGHT=600&LAYERS=URBAN_ATLAS_COG&STYLES=&FORMAT=image/png
+http://localhost:8080/mapserver?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX=2914994,4969954,3129956,5152659&CRS=EPSG:3035&WIDTH=800&HEIGHT=600&LAYERS=URBAN_ATLAS_COG&STYLES=&FORMAT=image/png
 ```
