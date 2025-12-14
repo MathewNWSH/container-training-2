@@ -10,9 +10,19 @@ k8s_yaml([
   'service.yaml',
   'ingress.yaml',
   'hpa.yaml',
+  # Locust
+  '../namespaces/locust.yaml',
+  '../locust/deployment.yaml',
+  '../locust/service.yaml',
+  '../locust/ingress.yaml',
 ])
 
 k8s_resource(
   'mapserver',
   port_forwards=8080,
+)
+
+k8s_resource(
+  'locust',
+  port_forwards=8089,
 )

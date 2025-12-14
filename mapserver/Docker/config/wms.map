@@ -22,7 +22,7 @@ MAP
     CONFIG "GDAL_HTTP_TCP_KEEPALIVE" "YES"
     CONFIG "GDAL_HTTP_VERSION" "2PRIOR_KNOWLEDGE"
     CONFIG "GDAL_INGESTED_BYTES_AT_OPEN" "1048576"
-    CONFIG "GDAL_NUM_THREADS" "2"
+    # CONFIG "GDAL_NUM_THREADS" "ALL_CPUS"
 
     WEB
         METADATA
@@ -40,6 +40,8 @@ MAP
     ######################################
     LAYER
         NAME "Krakow_UA_2021_Vector"
+        DEBUG 2
+        EXTENT 2500000 1400000 7500000 5600000
         METADATA
             "wms_title" "Urban Atlas 2021 Krakow"
             "wms_abstract" "Vector Urban Atlas 2021 Krakow; shown for scales 1:300000"
@@ -68,7 +70,6 @@ MAP
         CONNECTIONOPTIONS
             "VERIFY_BUFFERS" "NO"
         END
-        PROCESSING "CLOSE_CONNECTION=DEFER"
     END
 
     ######################################

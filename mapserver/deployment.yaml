@@ -44,14 +44,14 @@ spec:
           #   timeoutSeconds: 1
           #   failureThreshold: 3
           env:
-            # - name: MIN_PROCS
-            #   value: "1"
-            # - name: MAX_PROCS
-            #   value: "100"
-            # - name: MAX_LOAD_PER_PROC
-            #   value: "100"
-            # - name: IDLE_TIMEOUT
-            #   value: "10"
+            - name: MIN_PROCS
+              value: "1"
+            - name: MAX_PROCS
+              value: "2"
+            - name: MAX_LOAD_PER_PROC
+              value: "100"
+            - name: IDLE_TIMEOUT
+              value: "20"
 
             # paths inside the container image (config baked into image)
             - name: MAPSERVER_CONFIG_FILE
@@ -67,7 +67,7 @@ spec:
           resources:
             requests:
               cpu: 1000m
-              memory: 256Mi
+              memory: 1Gi
             limits:
               cpu: 2000m
               memory: 1Gi

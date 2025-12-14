@@ -6,7 +6,7 @@
     xmlns:gml="http://www.opengis.net/gml">
   <sld:NamedLayer>
     <!-- Replace this Name with the exact layer name from the GPKG (e.g. CLMS_UA_LCU_S2021_V025ha_BA001L1_SARAJEVO_03035_V01_R01_20250523) -->
-    <sld:Name>urban_atlas_2021</sld:Name>
+    <sld:Name>CLMS_UA_LCU_S2021_V025ha_PL003L2_KRAKOW_03035_V01_R00_20241025</sld:Name>
     <sld:UserStyle>
       <sld:Title>Urban Atlas 2021</sld:Title>
       <sld:FeatureTypeStyle>
