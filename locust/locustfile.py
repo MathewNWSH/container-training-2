@@ -1,6 +1,7 @@
 import random
 
-from locust import HttpUser, task, between
+from locust import HttpUser, between, task
+
 
 class MapServerUser(HttpUser):
     # Czas oczekiwania między zapytaniami (symulacja myślenia użytkownika)
@@ -35,13 +36,15 @@ class MapServerUser(HttpUser):
             "&LAYERS=Krakow_UA_2021_Vector&STYLES=&FORMAT=image/png"
             "&DPI=192&MAP_RESOLUTION=192&FORMAT_OPTIONS=dpi:192&TRANSPARENT=TRUE"
         )
-        
+
         with self.client.get(wms_params, catch_response=True) as response:
             if response.status_code == 200:
                 # Opcjonalnie: sprawdź czy to faktycznie obrazek
                 if response.headers.get("Content-Type") == "image/png":
                     response.success()
                 else:
-                    response.failure(f"Wrong content-type: {response.headers.get('Content-Type')}")
+                    response.failure(
+                        f"Wrong content-type: {response.headers.get('Content-Type')}"
+                    )
             else:
                 response.failure(f"Status code: {response.status_code}")
