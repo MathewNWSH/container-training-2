@@ -8,7 +8,7 @@ class MapServerUser(HttpUser):
     def get_map(self):
         # Zapytanie WMS GetMap (skopiowane z Twojego przykładu)
         wms_params = (
-            "/ogc?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap"
+            "/mapserver?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap"
             "&BBOX=3038576.234106336255%2C5032438.927781008184%2C3052011.334363552276%2C5043857.993520818651"
             "&CRS=EPSG:3035&WIDTH=1484&HEIGHT=1746"
             "&LAYERS=URBAN_ATLAS_COG&STYLES=&FORMAT=image/png"
