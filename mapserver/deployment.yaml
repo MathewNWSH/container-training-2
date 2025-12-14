@@ -30,7 +30,7 @@ spec:
           # readinessProbe:
           #   httpGet:
           #     port: 80
-          #     path: /ogc?SERVICE=WMS&REQUEST=GetCapabilities
+          #     path: /mapserver?SERVICE=WMS&REQUEST=GetCapabilities
           #   periodSeconds: 10
           #   timeoutSeconds: 30     # Zmieniono z 2s na 5s (WMS bywa powolny)
           #   failureThreshold: 3

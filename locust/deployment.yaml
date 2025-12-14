@@ -14,7 +14,7 @@ data:
         def get_map(self):
             # Parametry z Twojego URL
             wms_params = (
-                "/ogc?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap"
+                "/mapserver?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap"
                 "&BBOX=2914994.568592441268,4969954.361772307195,3129956.172707903199,5152659.413609274663"
                 "&CRS=EPSG:3035&WIDTH=1484&HEIGHT=1748"
                 "&LAYERS=URBAN_ATLAS_COG&STYLES=&FORMAT=image/png"
