@@ -17,14 +17,14 @@ spec:
         - name: mapserver
           image: my-mapserver
           imagePullPolicy: IfNotPresent
-          # # Startup: daj MapServerowi czas na uruchomienie
-          # startupProbe:
-          #   httpGet:
-          #     port: 80
-          #     path: /ogc?SERVICE=WMS&REQUEST=GetCapabilities
-          #   periodSeconds: 10      # Zmieniono z 2s na 5s (mniej zapytań na starcie)
-          #   timeoutSeconds: 30     # Zmieniono z 2s na 5s (bezpieczniejszy timeout)
-          #   failureThreshold: 12   # 12 * 5s = 60s (całkowity czas bez zmian)
+          # Startup: daj MapServerowi czas na uruchomienie
+          startupProbe:
+            httpGet:
+              port: 80
+              path: /mapserver?SERVICE=WMS&REQUEST=GetCapabilities
+            periodSeconds: 10      # Zmieniono z 2s na 5s (mniej zapytań na starcie)
+            timeoutSeconds: 30     # Zmieniono z 2s na 5s (bezpieczniejszy timeout)
+            failureThreshold: 12   # 12 * 5s = 60s (całkowity czas bez zmian)
 
           # # Readiness: kiedy Pod jest gotowy na ruch
           # readinessProbe:
@@ -44,14 +44,14 @@ spec:
           #   timeoutSeconds: 1
           #   failureThreshold: 3
           env:
-            - name: MIN_PROCS
-              value: "1"
-            - name: MAX_PROCS
-              value: "2"
-            - name: MAX_LOAD_PER_PROC
-              value: "100"
-            - name: IDLE_TIMEOUT
-              value: "20"
+            # - name: MIN_PROCS
+            #   value: "1"
+            # - name: MAX_PROCS
+            #   value: "20"
+            # - name: MAX_LOAD_PER_PROC
+            #   value: "5"
+            # - name: IDLE_TIMEOUT
+            #   value: "20"
 
             # paths inside the container image (config baked into image)
             - name: MAPSERVER_CONFIG_FILE
